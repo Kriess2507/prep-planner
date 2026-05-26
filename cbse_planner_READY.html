@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CBSE Class 12 — Drop Year Planner 2026-27</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#F7F5F0;--card:#FFFFFF;--border:#E8E4DC;--text:#1C1A17;--muted:#7A7469;
+  --accent-p:#4A3FA0;--accent-p-lt:#EAE8F8;
+  --accent-g:#1A6B4A;--accent-g-lt:#E3F2EA;
+  --accent-a:#B85C00;--accent-a-lt:#FFF0E0;
+  --accent-b:#1455A0;--accent-b-lt:#E3EDFA;
+  --coaching:#7A1A6B;--coaching-lt:#F5E8F3;
+  --green:#2D9D6E;
+  --shadow:0 1px 3px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.05);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);min-height:100vh;}
+header{background:var(--text);color:#F7F5F0;padding:2rem 2rem 1.5rem;position:relative;overflow:hidden;}
+header::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:40px solid rgba(255,255,255,.05);}
+header::after{content:"";position:absolute;right:40px;top:60px;width:90px;height:90px;border-radius:50%;border:20px solid rgba(255,255,255,.07);}
+.header-tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;opacity:.55;text-transform:uppercase;margin-bottom:.6rem;}
+header h1{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;line-height:1.2;margin-bottom:.4rem;}
+header h1 em{font-style:italic;}
+.header-sub{font-size:12px;opacity:.5;font-family:'DM Mono',monospace;}
+.drop-pill{display:inline-block;margin-top:.75rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;font-size:10px;font-family:'DM Mono',monospace;padding:3px 12px;letter-spacing:.08em;opacity:.85;}
+.progress-strip{display:flex;gap:8px;margin-top:1rem;align-items:center;}
+.prog-bar{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;background:#F7F5F0;transition:width .4s ease;}
+.prog-label{font-family:'DM Mono',monospace;font-size:11px;opacity:.6;min-width:36px;text-align:right;}
+nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+nav button{flex:1;padding:.875rem .5rem;border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;}
+nav button.active{color:var(--text);border-bottom-color:var(--text);}
+nav button:hover:not(.active){background:#F7F5F0;color:var(--text);}
+main{max-width:860px;margin:0 auto;padding:1.5rem 1rem 4rem;}
+.sec{display:none;}.sec.active{display:block;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem;}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;box-shadow:var(--shadow);}
+.stat-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;font-family:'DM Mono',monospace;}
+.stat-val{font-family:'Fraunces',serif;font-size:1.75rem;font-weight:300;line-height:1;}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:.3rem;}
+.mini-bar{height:3px;background:var(--border);border-radius:2px;margin-top:.5rem;overflow:hidden;}
+.mini-fill{height:100%;border-radius:2px;transition:width .4s;}
+.phases{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:1.5rem;}
+.phase{border:1px solid var(--border);border-radius:14px;padding:1.125rem;background:var(--card);position:relative;overflow:hidden;}
+.phase::before{content:attr(data-num);position:absolute;right:12px;top:8px;font-family:'Fraunces',serif;font-size:3.5rem;font-weight:600;opacity:.06;line-height:1;}
+.phase-badge{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-bottom:.5rem;text-transform:uppercase;}
+.phase-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:400;margin-bottom:.15rem;}
+.phase-period{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:.6rem;}
+.phase-desc{font-size:12.5px;color:var(--muted);line-height:1.65;}
+.month-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.25rem;}
+.month-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-size:12px;cursor:pointer;font-family:'DM Mono',monospace;color:var(--muted);transition:all .18s;}
+.month-btn:hover{border-color:#999;}
+.month-btn.sel{color:var(--card);border-color:transparent;}
+.month-btn.found.sel{background:var(--accent-p);}
+.month-btn.compl.sel{background:var(--accent-g);}
+.month-btn.revis.sel{background:var(--accent-b);}
+.month-btn.exam.sel{background:var(--accent-a);}
+.month-btn.found{color:var(--accent-p);border-color:var(--accent-p-lt);}
+.month-btn.compl{color:var(--accent-g);border-color:var(--accent-g-lt);}
+.month-btn.revis{color:var(--accent-b);border-color:var(--accent-b-lt);}
+.month-btn.exam{color:var(--accent-a);border-color:var(--accent-a-lt);}
+.subj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.125rem;margin-bottom:10px;box-shadow:var(--shadow);}
+.subj-head{display:flex;align-items:center;gap:10px;margin-bottom:.875rem;}
+.subj-pill{font-size:11px;font-family:'DM Mono',monospace;padding:4px 12px;border-radius:20px;}
+.subj-prog{margin-left:auto;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);}
+.ch-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-top:1px solid var(--border);}
+.ch-item:first-of-type{border-top:none;}
+.ch-check{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--border);appearance:none;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all .15s;position:relative;}
+.ch-check:checked{background:var(--green);border-color:var(--green);}
+.ch-check:checked::after{content:"checkmark";font-size:0;position:absolute;left:3px;top:2px;width:9px;height:5px;border-left:2px solid white;border-bottom:2px solid white;transform:rotate(-45deg);}
+.ch-name{font-size:13.5px;font-weight:500;transition:all .2s;}
+.ch-name.done{text-decoration:line-through;color:var(--muted);font-weight:400;}
+.ch-note{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.sched-toggle{display:flex;gap:6px;margin-bottom:1.25rem;flex-wrap:wrap;}
+.sched-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;color:var(--muted);transition:all .18s;}
+.sched-btn.active{background:var(--text);color:var(--card);border-color:var(--text);}
+.schedule{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.slot{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--border);}
+.slot:last-child{border-bottom:none;}
+.slot-time{padding:.75rem .875rem;font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);border-right:1px solid var(--border);background:#FBFAF8;display:flex;align-items:flex-start;}
+.slot-body{padding:.75rem .875rem;}
+.slot-task{font-size:13px;font-weight:500;line-height:1.4;}
+.slot-tag{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;margin-top:4px;padding:2px 8px;border-radius:10px;}
+.tracker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem;}
+.track-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;box-shadow:var(--shadow);}
+.track-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;}
+.track-count{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;line-height:1;}
+.track-bar{height:5px;background:var(--border);border-radius:3px;margin:.5rem 0;overflow:hidden;}
+.track-fill{height:100%;border-radius:3px;transition:width .4s;}
+.chlist{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);}
+.chlist-head{padding:.875rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:#FBFAF8;}
+.chlist-title{font-size:13px;font-weight:600;}
+.chlist-pct{margin-left:auto;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);}
+.chlist-item{display:flex;align-items:center;gap:10px;padding:.65rem 1rem;border-top:1px solid var(--border);}
+.chlist-item:first-of-type{border-top:none;}
+.tip-box{border-radius:14px;padding:1.25rem;margin-bottom:10px;}
+.tip-box h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:400;margin-bottom:.75rem;opacity:.85;}
+.tip-list{list-style:none;}
+.tip-list li{font-size:12.5px;padding:.3rem 0;padding-left:1.1rem;position:relative;line-height:1.6;opacity:.8;}
+.tip-list li::before{content:"--";position:absolute;left:0;opacity:.5;}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;}
+.leg-dot{width:8px;height:8px;border-radius:2px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1rem;}
+.info-cell{font-size:12.5px;color:var(--muted);padding:.75rem;background:#FBFAF8;border-radius:10px;line-height:1.6;}
+.info-cell strong{color:var(--text);display:block;margin-bottom:3px;font-size:13px;}
+footer{text-align:center;padding:2rem;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:2rem;}
+#sync-badge{display:inline-block;margin-top:.6rem;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.07em;padding:3px 10px;border-radius:20px;transition:background .3s,color .3s;}
+#setup-banner{background:#FFF0E0;border:1px solid #F5C67A;border-radius:10px;padding:.75rem 1rem;margin-bottom:1rem;font-size:12.5px;color:#7A4200;font-family:'DM Mono',monospace;display:none;}
+#setup-banner a{color:#B85C00;font-weight:600;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">CBSE Board Exam Prep · Drop Year · 2026-27</div>
+  <h1>Class 12 <em>Drop Year Planner</em></h1>
+  <div class="header-sub">Physics · Chemistry · Mathematics · May 2026 to Feb 2027</div>
+  <div class="drop-pill">No school · Coaching 2-3 hrs/day · 10-12 hrs self-study</div>
+  <div class="progress-strip">
+    <div class="prog-bar"><div class="prog-fill" id="hdr-fill" style="width:0%"></div></div>
+    <div class="prog-label" id="hdr-pct">0%</div>
+  </div>
+  <span id="sync-badge" style="background:#E8E4DC;color:#7A7469;">⟳ Loading…</span>
+</header>
+
+<nav>
+  <button class="active" onclick="tab('overview',this)">Overview</button>
+  <button onclick="tab('monthly',this)">Monthly</button>
+  <button onclick="tab('daily',this)">Daily</button>
+  <button onclick="tab('tracker',this)">Tracker</button>
+  <button onclick="tab('tips',this)">Tips</button>
+</nav>
+
+<main>
+<div id="setup-banner">⚠️ Cloud sync not configured — paste your Gist ID &amp; GitHub Token into the file. <a href="https://gist.github.com" target="_blank">Create Gist →</a></div>
+
+<div id="overview" class="sec active">
+  <div class="stats" id="stats-row"></div>
+  <div class="phases" id="phases-grid"></div>
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:var(--accent-p)"></div>Phase 1 - Foundation</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--accent-g)"></div>Phase 2 - Completion</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--accent-b)"></div>Phase 3 - Revision</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--accent-a)"></div>Phase 4 - Exam sprint</div>
+  </div>
+  <div class="subj-card">
+    <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;">Drop year advantage</div>
+    <div class="info-grid">
+      <div class="info-cell"><strong>On coaching days</strong>Coaching 2-3 hrs + 8-9 hrs self-study = 10-12 hrs total. Pre-read every topic the night before class.</div>
+      <div class="info-cell"><strong>On free days</strong>Full 10-12 hrs self-study. Use extra time for an additional problem set or a full mock test.</div>
+      <div class="info-cell"><strong>Coaching strategy</strong>Treat coaching as doubt-clearing and reinforcement — not as primary learning. Always arrive having read the topic first.</div>
+      <div class="info-cell"><strong>Post-coaching ritual</strong>Within 1 hour of returning, rewrite key points from the class. Retention drops sharply if you delay this.</div>
+      <div class="info-cell"><strong>Weekly rest</strong>Take Sunday morning completely off. Burnout is the biggest risk in a drop year — sustainability beats raw intensity.</div>
+      <div class="info-cell"><strong>Sleep</strong>7-8 hours every night without compromise. No late-night studying past 10:30 PM. Ever.</div>
+    </div>
+  </div>
+</div>
+
+<div id="monthly" class="sec">
+  <div class="month-grid" id="month-grid"></div>
+  <div id="month-content"></div>
+</div>
+
+<div id="daily" class="sec">
+  <div class="sched-toggle">
+    <button class="sched-btn active" onclick="sched('coaching',this)">With coaching</button>
+    <button class="sched-btn" onclick="sched('nocoaching',this)">No coaching day</button>
+    <button class="sched-btn" onclick="sched('sunday',this)">Sunday</button>
+    <button class="sched-btn" onclick="sched('exam',this)">Exam season</button>
+  </div>
+  <div id="daily-content"></div>
+</div>
+
+<div id="tracker" class="sec">
+  <div class="tracker-grid" id="tracker-top"></div>
+  <div id="tracker-lists"></div>
+</div>
+
+<div id="tips" class="sec">
+  <div class="tip-box" style="background:var(--text);color:#F7F5F0;">
+    <h3>Drop year mindset - the real game</h3>
+    <ul class="tip-list">
+      <li>You have 10-12 hrs per day - use this to go deeper, not just faster. A student who masters integration beats one who rushed through 3 extra chapters.</li>
+      <li>Pre-read every coaching topic the night before class. This turns coaching into a powerful Q&A session instead of a first encounter.</li>
+      <li>Write a post-coaching recap within 1 hour of getting home - do not skip this. Retention drops by 70% if you wait until evening.</li>
+      <li>The biggest drop year trap is an inconsistent July-August. One lazy month undoes weeks of good work. Protect those months fiercely.</li>
+      <li>Take Sunday mornings off completely - rest is not wasted time, it is what makes 10-hr days sustainable for 9 months.</li>
+    </ul>
+  </div>
+  <div class="tip-box" style="background:var(--accent-p-lt);margin-bottom:10px;">
+    <h3 style="color:var(--accent-p);">Physics - board exam strategy</h3>
+    <ul class="tip-list" style="color:#2a2560;">
+      <li>Every NCERT derivation must be written from memory with all steps - boards give zero partial credit if steps are skipped.</li>
+      <li>Ray optics and AC circuits carry the highest marks in Section C - master these before everything else.</li>
+      <li>Numericals: always write the formula, substitution, and unit in separate lines. A unit error costs full marks on a 3-mark question.</li>
+      <li>Semiconductor logic gates appear every single year. Do not skip Ch 14 even if your coaching does not cover it in depth.</li>
+      <li>With drop year time, solve ALL NCERT Exemplar problems - boards increasingly pull from Exemplar.</li>
+    </ul>
+  </div>
+  <div class="tip-box" style="background:var(--accent-g-lt);margin-bottom:10px;">
+    <h3 style="color:var(--accent-g);">Chemistry - how to lock in full marks</h3>
+    <ul class="tip-list" style="color:#0d3d29;">
+      <li>Name reactions are non-negotiable: Aldol, Cannizzaro, Reimer-Tiemann, Wolff-Kishner, Sandmeyer, Gabriel synthesis, Kolbe. Write all 7 from memory daily in October.</li>
+      <li>Electrochemistry numericals (Nernst equation, Kohlrausch) and kinetics (first-order rate law) appear every year - drill these weekly.</li>
+      <li>p-block: the anomalous properties of the first element of each group is a guaranteed 1-mark question every year.</li>
+      <li>With your extra time, practise 10 organic conversions every day from October. You can finish every standard conversion twice over before exams.</li>
+      <li>Coordination compounds IUPAC naming: 3 guaranteed marks - practise 5 compounds per day until it is automatic.</li>
+    </ul>
+  </div>
+  <div class="tip-box" style="background:var(--accent-a-lt);margin-bottom:10px;">
+    <h3 style="color:var(--accent-a);">Mathematics - path to 100/100</h3>
+    <ul class="tip-list" style="color:#5c2e00;">
+      <li>Integration alone carries 20+ marks. Master every standard form, substitution method, by-parts (ILATE), and properties of definite integrals before October.</li>
+      <li>Differential equations - variable separable and linear first-order appear every single year without exception.</li>
+      <li>In the exam, attempt Case Study and Assertion-Reason questions first - they are the easiest marks and require no heavy calculation.</li>
+      <li>Probability: Bayes theorem appears in some form in almost every paper. Solve 20+ variety problems in November.</li>
+      <li>Write every step even when you are unsure - boards give step marking. A wrong final answer with correct method still earns 3 out of 5 marks.</li>
+    </ul>
+  </div>
+  <div class="subj-card">
+    <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem;">General exam strategy</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div class="info-cell">Start CBSE Previous Year Papers from <strong style="display:inline;color:var(--text);">September 2026</strong> (one month earlier than school students). Chapter-wise first, full papers from November onwards.</div>
+      <div class="info-cell">Maintain an <strong style="display:inline;color:var(--text);">Error Log</strong>. Every mistake in practice is written down. Review it every Sunday morning before your rest time.</div>
+      <div class="info-cell">Make <strong style="display:inline;color:var(--text);">one-page handwritten formula sheets</strong> per chapter as you finish them. From January, read them every morning before anything else.</div>
+      <div class="info-cell">In the exam hall: spend the <strong style="display:inline;color:var(--text);">first 15 minutes reading</strong> the full paper, planning the order, and marking easy questions. Never start writing immediately.</div>
+      <div class="info-cell">The week before each board paper: light revision only, no new topics, 8 hrs sleep. Over-studying the final week is the single most common drop year mistake.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+<footer>CBSE Class 12 Drop Year · Physics · Chemistry · Mathematics · Board Exams Feb-Mar 2027</footer>
+
+<script>
+const phases=[
+  {num:"01",badge:"Phase 1",title:"Deep foundation",period:"May - Jun 2026",bg:"var(--accent-p-lt)",tc:"var(--accent-p)",
+   desc:"First thorough pass through all NCERT chapters. No school means 3-4 chapters per week is realistic. Pre-read every coaching topic. Complete theory + all exercises, zero skipping."},
+  {num:"02",badge:"Phase 2",title:"Full completion + PYQs",period:"Jul - Aug 2026",bg:"var(--accent-g-lt)",tc:"var(--accent-g)",
+   desc:"Finish all remaining chapters across all three subjects. Begin NCERT Exemplar. Start chapter-wise PYQs immediately after finishing each chapter - you have the time to do this properly."},
+  {num:"03",badge:"Phase 3",title:"Intensive revision",period:"Sep - Nov 2026",bg:"var(--accent-b-lt)",tc:"var(--accent-b)",
+   desc:"Two full revision passes of the entire syllabus. Three sample papers per week minimum. Build formula booklets, name reactions master list, all derivations. Weekly full mocks from October."},
+  {num:"04",badge:"Phase 4",title:"Mock tests + final sprint",period:"Dec 2026 - Feb 2027",bg:"var(--accent-a-lt)",tc:"var(--accent-a)",
+   desc:"Timed full mocks every single day in January. Revisit weak spots only - no new content ever. Board exams begin Feb-Mar 2027. Sleep and mental health are your priority now."}
+];
+
+const months=[
+  {n:"May '26",t:"found"},{n:"Jun '26",t:"found"},
+  {n:"Jul '26",t:"compl"},{n:"Aug '26",t:"compl"},
+  {n:"Sep '26",t:"revis"},{n:"Oct '26",t:"revis"},{n:"Nov '26",t:"revis"},
+  {n:"Dec '26",t:"exam"},{n:"Jan '27",t:"exam"},{n:"Feb '27",t:"exam"}
+];
+
+const mdata={
+"May '26":{
+  physics:[
+    {c:"Ch 1: Electric Charges & Fields",n:"Coulomb's law, Gauss's law, field lines, dipole in uniform field"},
+    {c:"Ch 2: Electrostatic Potential & Capacitance",n:"Potential energy, equipotential surfaces, capacitors, dielectrics, energy stored"},
+    {c:"Ch 3: Current Electricity",n:"Ohm's law, drift velocity, Kirchhoff's laws, Wheatstone bridge, meter bridge"}
+  ],
+  chemistry:[
+    {c:"Ch 1: The Solid State",n:"Crystal systems, Bravais lattices, close packing, defects, electrical properties"},
+    {c:"Ch 2: Solutions",n:"Colligative properties, Raoult's law, osmosis, van't Hoff factor, abnormal molar mass"},
+    {c:"Ch 3: Electrochemistry",n:"Nernst equation, Faraday's laws, conductance, Kohlrausch's law, batteries, fuel cells"}
+  ],
+  maths:[
+    {c:"Ch 1: Relations & Functions",n:"Types of relations, bijective, composite, invertible functions"},
+    {c:"Ch 2: Inverse Trigonometric Functions",n:"Domain, range, principal values, properties, identities - all proofs"},
+    {c:"Ch 3: Matrices",n:"Types, operations, transpose, symmetric, skew-symmetric, elementary row operations"}
+  ]
+},
+"Jun '26":{
+  physics:[
+    {c:"Ch 4: Moving Charges & Magnetism",n:"Biot-Savart law, Ampere's law, force on conductor, galvanometer, cyclotron"},
+    {c:"Ch 5: Magnetism & Matter",n:"Bar magnet, Earth's magnetism, diamagnetic, paramagnetic, ferromagnetic, hysteresis"},
+    {c:"Ch 6: Electromagnetic Induction",n:"Faraday's laws, Lenz's law, self & mutual inductance, eddy currents"},
+    {c:"Ch 7: Alternating Current",n:"RMS values, phasors, RLC circuits, resonance, power factor, transformer"}
+  ],
+  chemistry:[
+    {c:"Ch 4: Chemical Kinetics",n:"Rate law, Arrhenius equation, order of reaction, molecularity, half-life, pseudo first-order"},
+    {c:"Ch 5: Surface Chemistry",n:"Adsorption isotherms, catalysis, colloids, Tyndall effect, coagulation, emulsions"},
+    {c:"Ch 6: General Principles - Isolation of Elements",n:"Thermodynamic principles, Ellingham diagram, metallurgy, froth flotation, refining"}
+  ],
+  maths:[
+    {c:"Ch 4: Determinants",n:"Properties, minors, cofactors, adjoint, inverse, Cramer's rule, area of triangle"},
+    {c:"Ch 5: Continuity & Differentiability",n:"Continuity, chain rule, implicit, parametric, logarithmic differentiation, Rolle's, MVT"},
+    {c:"Ch 6: Application of Derivatives",n:"Increasing/decreasing, tangent & normal, maxima & minima, rate of change, approximations"}
+  ]
+},
+"Jul '26":{
+  physics:[
+    {c:"Ch 8: Electromagnetic Waves",n:"Maxwell's equations, displacement current, EM spectrum, properties of EM waves"},
+    {c:"Ch 9: Ray Optics & Optical Instruments",n:"Refraction, TIR, lens maker's equation, power, microscope, telescope, defects of vision"},
+    {c:"Ch 10: Wave Optics",n:"Huygens' principle, interference, Young's double slit, diffraction, polarization"}
+  ],
+  chemistry:[
+    {c:"Ch 7: The p-Block Elements (Groups 15-18)",n:"Oxoacids of N, P, S, Cl; allotropes of C, S, P; anomalous properties; noble gas compounds"},
+    {c:"Ch 8: d and f Block Elements",n:"Properties, colour, catalytic activity, lanthanide contraction, actinides, important compounds"},
+    {c:"Ch 9: Coordination Compounds",n:"Werner's theory, IUPAC naming, VBT, CFT, spectrochemical series, isomerism, stability"}
+  ],
+  maths:[
+    {c:"Ch 7: Integrals - Part 1",n:"Standard integrals, substitution method, trigonometric integrals, partial fractions"},
+    {c:"Ch 7: Integrals - Part 2",n:"Integration by parts (ILATE), definite integrals, properties, limit of sum method"},
+    {c:"Ch 8: Application of Integrals",n:"Area under curves, area between two curves - standard results and varied problems"}
+  ]
+},
+"Aug '26":{
+  physics:[
+    {c:"Ch 11: Dual Nature of Radiation & Matter",n:"Photoelectric effect, Einstein's equation, stopping potential, de Broglie, Davisson-Germer"},
+    {c:"Ch 12: Atoms",n:"Rutherford model, Bohr's model, hydrogen spectrum, energy levels, ionization energy"},
+    {c:"Ch 13: Nuclei",n:"Nuclear size, binding energy, radioactivity, alpha/beta/gamma decay, fission, fusion"},
+    {c:"Ch 14: Semiconductor Electronics",n:"p-n junction, diodes, rectification, transistors, logic gates AND/OR/NOT/NAND/NOR"}
+  ],
+  chemistry:[
+    {c:"Ch 10: Haloalkanes & Haloarenes",n:"SN1, SN2, elimination, Grignard reagents, Finkelstein, Swartz, nucleophilicity order"},
+    {c:"Ch 11: Alcohols, Phenols & Ethers",n:"Reactions, acidic strength, Williamson synthesis, dehydration, Lucas test, phenol reactions"},
+    {c:"Ch 12: Aldehydes, Ketones & Carboxylic Acids",n:"Nucleophilic addition, Aldol condensation, Cannizzaro reaction, Hell-Volhard-Zelinsky"}
+  ],
+  maths:[
+    {c:"Ch 9: Differential Equations",n:"Order, degree, variable separable, homogeneous, linear first-order DE, applications"},
+    {c:"Ch 10: Vector Algebra",n:"Dot product, cross product, scalar triple product, projection, section formula"},
+    {c:"Ch 11: Three Dimensional Geometry",n:"Direction cosines & ratios, equations of lines and planes, angle between them, distance"}
+  ]
+},
+"Sep '26":{
+  physics:[
+    {c:"Full Revision Round 1: Ch 1-7",n:"Electrostatics to AC. Formula sheets complete. Solve 5 years of chapter-wise PYQs back to back."},
+    {c:"Full Revision Round 1: Ch 8-14",n:"Optics to Semiconductors. NCERT Exemplar for every chapter. Focus on assertion-reason type."}
+  ],
+  chemistry:[
+    {c:"Ch 13: Amines",n:"Classification, basicity trends, Gabriel synthesis, Hofmann bromamide, diazonium salts"},
+    {c:"Ch 14: Biomolecules",n:"Carbohydrates, amino acids, proteins, nucleic acids, enzymes, vitamins, hormones"},
+    {c:"Ch 15: Polymers",n:"Addition & condensation, Nylon, Bakelite, rubber, biodegradable polymers - all types"},
+    {c:"Ch 16: Chemistry in Everyday Life",n:"Drug classification, antibiotics, food additives, cleansing agents, antacids, disinfectants"}
+  ],
+  maths:[
+    {c:"Ch 12: Linear Programming",n:"Feasible region, corner point method, maximisation and minimisation problems"},
+    {c:"Ch 13: Probability",n:"Conditional probability, multiplication theorem, Bayes' theorem, binomial distribution"},
+    {c:"Maths Revision Round 1: Ch 1-8",n:"Relations to Application of Integrals. Chapter-wise PYQs for each. Update error log."}
+  ]
+},
+"Oct '26":{
+  physics:[
+    {c:"Full Revision Round 2: Electrostatics & Current",n:"Ch 1-3. Solve 2019-2024 chapter PYQs back to back. Timed numericals only. No theory re-reading."},
+    {c:"Full Revision Round 2: Magnetism, EMI, AC",n:"Ch 4-7. All derivations written from memory. Analyse mark schemes carefully."},
+    {c:"Full Revision Round 2: Optics & Modern Physics",n:"Ch 8-14. Sample paper Section C questions only. Focus on 5-mark numericals and derivations."}
+  ],
+  chemistry:[
+    {c:"Full Revision: Physical Chemistry (Ch 1-5)",n:"Numerical drills: Nernst, Kohlrausch, rate law, colligative properties. 30 min per subtopic daily."},
+    {c:"Full Revision: Inorganic Chemistry (Ch 6-9)",n:"p-block reactions, d-block properties, colour, oxidation states, IUPAC naming coordination compounds."},
+    {c:"Full Revision: Organic Chemistry (Ch 10-16)",n:"All name reactions from memory, 10 organic conversions daily, named tests (Tollens, Fehling, Lucas)."}
+  ],
+  maths:[
+    {c:"Full Revision: Calculus (Ch 5-9)",n:"Highest-weight area. 15 integration problems every session. All DE types with solutions from scratch."},
+    {c:"Full Revision: Algebra & Vectors (Ch 1-4, 10-11)",n:"Matrices, determinants, 3D geometry. Chapter PYQs for each topic fully solved."},
+    {c:"Full Revision: Probability & LP (Ch 12-13)",n:"Bayes' theorem all variations. Every LPP PYQ from 2017 onwards. Graphical method speed."}
+  ]
+},
+"Nov '26":{
+  physics:[
+    {c:"Sample papers 2019-2024 (full timed, 3 per week)",n:"Self-evaluate within 1 hour of finishing. Update error log every time. Target 70+ per paper."},
+    {c:"All NCERT derivations written from memory",n:"2 derivations per day, written completely without references. Every derivation expected in boards."},
+    {c:"NCERT Exemplar - remaining questions",n:"Higher-order thinking questions. Exactly the type used in recent board papers."}
+  ],
+  chemistry:[
+    {c:"Name reactions daily rapid drill",n:"Write all 8 name reactions from memory every morning: Aldol, Cannizzaro, Wolff-Kishner, Sandmeyer, Reimer-Tiemann, Gabriel, Kolbe, Hofmann."},
+    {c:"PYQs 2019-2024 - full chemistry papers",n:"Analyse marking scheme step by step. Understand exactly how every mark is awarded."},
+    {c:"Inorganic exceptions and anomalies",n:"Anomalous properties, colour of d-block compounds, oxidation state stability, p-block trends."}
+  ],
+  maths:[
+    {c:"Sample papers 2019-2024 (full timed, 3 per week)",n:"Target 75+ marks per mock. Time every section. Never leave any question blank."},
+    {c:"Integration intensive drill",n:"50 integration problems per week across all types. Focus on definite integrals with properties."},
+    {c:"Personal formula booklet - final version",n:"Compile a 4-6 page handwritten summary of every key result. Review every single morning."}
+  ]
+},
+"Dec '26":{
+  physics:[
+    {c:"Full timed mocks daily (3 hrs sharp)",n:"Every morning, exam conditions, no phone. Strict 3-hour window on A4 answer sheets."},
+    {c:"Error log targeted revision",n:"After each mock, spend 90 mins fixing only specific errors you made. No scatter."},
+    {c:"CBSE Sample Papers 2025-26",n:"Latest pattern and marking scheme. Writing speed practice on actual-sized paper."}
+  ],
+  chemistry:[
+    {c:"Full timed mocks daily (3 hrs sharp)",n:"Focus on 5-mark long answers - write in point form with labelled diagrams where needed."},
+    {c:"Organic conversions final round",n:"20 conversions daily from the standard list. Every pathway written from memory."},
+    {c:"CBSE Sample Papers 2025-26",n:"Calibrate answer length and writing speed against marking scheme."}
+  ],
+  maths:[
+    {c:"Full timed mocks daily (3 hrs sharp)",n:"Complete all sections every mock. Partial marks strategy: always write some steps even when unsure."},
+    {c:"Weak chapter intensive sessions",n:"Bottom 3 chapters from mock analysis - give 2 hrs per day to these in December."},
+    {c:"CBSE Sample Papers 2025-26",n:"Section A: 30 min max. Section B: 45 min. Section C: 60 min. Practise this timing."}
+  ]
+},
+"Jan '27":{
+  physics:[
+    {c:"Daily timed mock - every morning",n:"Rotate subjects. Self-evaluate within 1 hour. Error log updated every single day."},
+    {c:"Formula sheet - daily morning read",n:"First 20 minutes every day: read formula booklet cover to cover. No exceptions."},
+    {c:"Derivations speed test",n:"2 derivations daily, written completely under timed conditions (5 min each)."}
+  ],
+  chemistry:[
+    {c:"Daily mock + name reactions drill",n:"Morning mock + all 8 name reactions written from memory. Non-negotiable daily habit."},
+    {c:"Inorganic final revision",n:"p-block and d-block summary read daily. Coordination IUPAC: 5 compounds per day."},
+    {c:"Numerical speed drills",n:"5 electrochemistry and kinetics numericals per day, timed. Check every unit."}
+  ],
+  maths:[
+    {c:"Daily mock - integration and probability focus",n:"These areas carry most marks. Every mock must include fresh integration and probability problems."},
+    {c:"Step-writing discipline",n:"Practice fully detailed solutions for 5-mark questions. Partial marks strategy is essential."},
+    {c:"Theorem statement revision",n:"Rolle's, MVT, FTC, Bayes' - write the exact statement daily from memory."}
+  ]
+},
+"Feb '27":{
+  physics:[
+    {c:"Rapid daily revision - formula sheets only",n:"30 min every morning from memory, then verify. No new topics under any circumstances."},
+    {c:"CBSE Sample Papers 2025-26 final round",n:"Latest marking scheme. Practice on actual A4 answer sheets at exam writing speed."}
+  ],
+  chemistry:[
+    {c:"Rapid revision - reactions and named tests",n:"Tollens, Fehling, Lucas, Iodoform, Victor Meyer - know them cold. 1 set daily from memory."},
+    {c:"CBSE Sample Papers 2025-26 final round",n:"Write answers exactly as you would in the exam. No shortcuts. Check answer length."}
+  ],
+  maths:[
+    {c:"Rapid revision - key theorems and results",n:"Rolle's, MVT, FTC, Bayes', properties of definite integrals - write from memory every morning."},
+    {c:"CBSE Sample Papers 2025-26 final round",n:"Show every step. Step marking gives partial credit even with a wrong final answer."}
+  ]
+}
+};
+
+const scheds={
+coaching:[
+  {time:"5:30 - 6:00",task:"Wake up, freshen up, light stretching or a short walk",sub:null},
+  {time:"6:00 - 8:00",task:"Mathematics - new chapter or intensive problem solving",sub:"maths"},
+  {time:"8:00 - 8:30",task:"Breakfast. Read through yesterday's notes briefly.",sub:null},
+  {time:"8:30 - 10:00",task:"Physics - chapter theory + NCERT exercises",sub:"physics"},
+  {time:"10:00 - 10:15",task:"Short break, hydrate",sub:null},
+  {time:"10:15 - 11:15",task:"Chemistry - reactions, mechanisms, numericals",sub:"chemistry"},
+  {time:"11:15 - 1:15",task:"Coaching classes",sub:"coaching"},
+  {time:"1:15 - 2:15",task:"Lunch and genuine rest. No books.",sub:null},
+  {time:"2:15 - 3:15",task:"Post-coaching recap: rewrite key points from class while memory is fresh",sub:"coaching"},
+  {time:"3:15 - 5:00",task:"Solve problems on today's coaching topic",sub:null},
+  {time:"5:00 - 5:30",task:"Break, snack, short walk outside",sub:null},
+  {time:"5:30 - 7:00",task:"Mathematics - problem practice or previous year questions",sub:"maths"},
+  {time:"7:00 - 8:00",task:"Dinner and relaxation",sub:null},
+  {time:"8:00 - 9:30",task:"Chemistry or Physics revision - alternate each night",sub:null},
+  {time:"9:30 - 10:00",task:"Pre-read tomorrow's coaching topic; write 3 questions to ask the teacher",sub:"coaching"},
+  {time:"10:00",task:"Sleep - 7 to 8 hours, non-negotiable",sub:null}
+],
+nocoaching:[
+  {time:"5:30 - 6:00",task:"Wake up, exercise, freshen up",sub:null},
+  {time:"6:00 - 8:30",task:"Mathematics - 2.5 hrs intensive problem solving or new chapter",sub:"maths"},
+  {time:"8:30 - 9:00",task:"Breakfast",sub:null},
+  {time:"9:00 - 11:00",task:"Physics - 2 hrs theory + all NCERT exercises for chapter",sub:"physics"},
+  {time:"11:00 - 11:15",task:"Short break",sub:null},
+  {time:"11:15 - 1:15",task:"Chemistry - 2 hrs theory, name reactions, numericals",sub:"chemistry"},
+  {time:"1:15 - 2:15",task:"Lunch and genuine rest",sub:null},
+  {time:"2:15 - 4:00",task:"Timed sample paper or chapter-wise previous year questions",sub:null},
+  {time:"4:00 - 4:15",task:"Break, snack",sub:null},
+  {time:"4:15 - 6:00",task:"Mathematics - second session, problem sets or weak topics",sub:"maths"},
+  {time:"6:00 - 6:45",task:"Walk outdoors, recharge completely",sub:null},
+  {time:"6:45 - 8:15",task:"Physics or Chemistry - alternate days",sub:null},
+  {time:"8:15 - 9:00",task:"Dinner and relaxation",sub:null},
+  {time:"9:00 - 10:00",task:"Revision - formula sheets, name reactions, or brief notes",sub:null},
+  {time:"10:00 - 10:30",task:"Daily recap: write 5 things learnt today in your study diary",sub:null},
+  {time:"10:30",task:"Sleep",sub:null}
+],
+sunday:[
+  {time:"7:00 - 8:30",task:"Slow morning. No books. Good breakfast. Rest completely.",sub:null},
+  {time:"8:30 - 9:30",task:"Review error log from the week - categorise mistakes by topic",sub:null},
+  {time:"9:30 - 10:30",task:"Light revision only - formula sheets and notes. Nothing new.",sub:null},
+  {time:"10:30 - 1:30",task:"Full timed mock test (3 hours, strict exam conditions)",sub:null},
+  {time:"1:30 - 2:30",task:"Lunch and genuine rest",sub:null},
+  {time:"2:30 - 4:00",task:"Self-evaluate the mock: mark every answer, update error log",sub:null},
+  {time:"4:00 - 5:30",task:"Targeted revision: fix this week's top 3 errors only",sub:null},
+  {time:"5:30 - 7:30",task:"Free time - outdoors, recreation, call friends, family. No guilt.",sub:null},
+  {time:"7:30 - 8:30",task:"Dinner. Plan next week: list chapters and targets for Mon-Sat.",sub:null},
+  {time:"9:30",task:"Sleep early. Prep for a strong Monday.",sub:null}
+],
+exam:[
+  {time:"5:00 - 5:30",task:"Wake up, deep breathing, light yoga",sub:null},
+  {time:"5:30 - 6:30",task:"Formula sheet read - cover to cover, then write from memory",sub:null},
+  {time:"6:30 - 7:00",task:"Breakfast",sub:null},
+  {time:"7:00 - 10:00",task:"Full timed mock test (3 hours, strict exam conditions, answer sheet format)",sub:null},
+  {time:"10:00 - 11:00",task:"Self-evaluation - mark every answer yourself, log every error",sub:null},
+  {time:"11:00 - 11:15",task:"Short break",sub:null},
+  {time:"11:15 - 1:00",task:"Targeted revision: only the errors from today's mock. Nothing else.",sub:null},
+  {time:"1:00 - 2:00",task:"Lunch and genuine rest",sub:null},
+  {time:"2:00 - 3:30",task:"Name reactions or derivations or formula drills for next subject",sub:null},
+  {time:"3:30 - 4:00",task:"Break, walk, fresh air",sub:null},
+  {time:"4:00 - 5:30",task:"Light notes revision only. No heavy problems.",sub:null},
+  {time:"5:30 - 6:30",task:"Walk, recreation, family time. Decompress fully.",sub:null},
+  {time:"6:30 - 8:00",task:"Coaching if scheduled. Otherwise: formula sheet final pass.",sub:"coaching"},
+  {time:"9:00",task:"Sleep. Do not study after 9 PM in exam season. Rest is the strategy.",sub:null}
+]
+};
+
+const allCh={
+  physics:["Ch 1: Electric Charges & Fields","Ch 2: Electrostatic Potential & Capacitance","Ch 3: Current Electricity","Ch 4: Moving Charges & Magnetism","Ch 5: Magnetism & Matter","Ch 6: Electromagnetic Induction","Ch 7: Alternating Current","Ch 8: Electromagnetic Waves","Ch 9: Ray Optics & Optical Instruments","Ch 10: Wave Optics","Ch 11: Dual Nature of Radiation & Matter","Ch 12: Atoms","Ch 13: Nuclei","Ch 14: Semiconductor Electronics"],
+  chemistry:["Ch 1: The Solid State","Ch 2: Solutions","Ch 3: Electrochemistry","Ch 4: Chemical Kinetics","Ch 5: Surface Chemistry","Ch 6: General Principles - Isolation of Elements","Ch 7: The p-Block Elements","Ch 8: d and f Block Elements","Ch 9: Coordination Compounds","Ch 10: Haloalkanes & Haloarenes","Ch 11: Alcohols, Phenols & Ethers","Ch 12: Aldehydes, Ketones & Carboxylic Acids","Ch 13: Amines","Ch 14: Biomolecules","Ch 15: Polymers","Ch 16: Chemistry in Everyday Life"],
+  maths:["Ch 1: Relations & Functions","Ch 2: Inverse Trigonometric Functions","Ch 3: Matrices","Ch 4: Determinants","Ch 5: Continuity & Differentiability","Ch 6: Application of Derivatives","Ch 7: Integrals","Ch 8: Application of Integrals","Ch 9: Differential Equations","Ch 10: Vector Algebra","Ch 11: Three Dimensional Geometry","Ch 12: Linear Programming","Ch 13: Probability"]
+};
+
+const sc={
+  physics:{dot:"#4A3FA0",lt:"var(--accent-p-lt)",tc:"var(--accent-p)",lbl:"Physics"},
+  chemistry:{dot:"#1A6B4A",lt:"var(--accent-g-lt)",tc:"var(--accent-g)",lbl:"Chemistry"},
+  maths:{dot:"#B85C00",lt:"var(--accent-a-lt)",tc:"var(--accent-a)",lbl:"Mathematics"},
+  coaching:{dot:"#7A1A6B",lt:"var(--coaching-lt)",tc:"var(--coaching)",lbl:"Coaching"}
+};
+
+// ─── CLOUD SYNC CONFIG (GitHub Gist) ─────────────────────────────────
+// Step 1: Go to gist.github.com → New Gist
+//         Filename: planner_data.json  |  Content: {}  |  Create secret Gist
+//         Copy the Gist ID from the URL: gist.github.com/username/THIS_PART
+// Step 2: GitHub → Settings → Developer Settings → Personal Access Tokens
+//         → Tokens (classic) → Generate new token → tick only "gist" → Copy
+const GIST_ID    = "3d9fa3365156d10de4e975abaa16896d";
+const GH_TOKEN   = "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";
+const GIST_FILE  = "planner_data.json";
+// ─────────────────────────────────────────────────────────────────────
+
+let chk = {};
+let curMonth = "May '26", curSched = "coaching";
+let _saveTimer = null;
+let _lastEtag  = null;
+
+function setSyncStatus(state) {
+  const el = document.getElementById("sync-badge");
+  if (!el) return;
+  const cfg = {
+    loading: { text: "⟳ Loading…",   bg: "#E8E4DC", color: "#7A7469" },
+    saving:  { text: "↑ Saving…",    bg: "#FFF0E0", color: "#B85C00" },
+    saved:   { text: "✓ Synced",     bg: "#E3F2EA", color: "#1A6B4A" },
+    error:   { text: "✗ Sync error", bg: "#FDE8E8", color: "#B00020" },
+  };
+  const c = cfg[state] || cfg.saved;
+  el.textContent = c.text;
+  el.style.background = c.bg;
+  el.style.color = c.color;
+}
+
+async function loadFromCloud() {
+  if (GIST_ID === "PASTE_YOUR_GIST_ID_HERE") {
+    document.getElementById("setup-banner").style.display = "block";
+    setSyncStatus("error");
+    _initRender();
+    return;
+  }
+  setSyncStatus("loading");
+  try {
+    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+      headers: { "Authorization": `token ${GH_TOKEN}`, "Accept": "application/vnd.github+json" }
+    });
+    if (res.ok) {
+      _lastEtag = res.headers.get("ETag");
+      const data = await res.json();
+      const raw = data.files[GIST_FILE]?.content || "{}";
+      chk = JSON.parse(raw);
+    }
+  } catch (e) { setSyncStatus("error"); }
+  setSyncStatus("saved");
+  _initRender();
+}
+
+async function save() {
+  setSyncStatus("saving");
+  if (GIST_ID === "PASTE_YOUR_GIST_ID_HERE") { setSyncStatus("saved"); return; }
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+        method: "PATCH",
+        headers: {
+          "Authorization": `token ${GH_TOKEN}`,
+          "Accept": "application/vnd.github+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ files: { [GIST_FILE]: { content: JSON.stringify(chk) } } })
+      });
+      setSyncStatus(res.ok ? "saved" : "error");
+    } catch (e) { setSyncStatus("error"); }
+  }, 700);
+}
+
+setInterval(async () => {
+  if (GIST_ID === "PASTE_YOUR_GIST_ID_HERE") return;
+  try {
+    const headers = { "Authorization": `token ${GH_TOKEN}`, "Accept": "application/vnd.github+json" };
+    if (_lastEtag) headers["If-None-Match"] = _lastEtag;
+    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`, { headers });
+    if (res.status === 304) return;
+    if (res.ok) {
+      _lastEtag = res.headers.get("ETag");
+      const data = await res.json();
+      const raw = data.files[GIST_FILE]?.content || "{}";
+      chk = JSON.parse(raw);
+      renderStats(); renderMonthContent();
+      if (document.getElementById("tracker").classList.contains("active")) renderTracker();
+    }
+  } catch (e) {}
+}, 30000);
+function k(s,c){return s+"|"+c;}
+function totalCh(){return Object.values(allCh).reduce((a,b)=>a+b.length,0);}
+function doneCh(){return ["physics","chemistry","maths"].reduce((s,sub)=>s+allCh[sub].filter(c=>chk[k(sub,c)]).length,0);}
+function subDone(sub){return allCh[sub].filter(c=>chk[k(sub,c)]).length;}
+
+function renderStats(){
+  const total=totalCh(),done=doneCh(),pct=Math.round(done/total*100);
+  document.getElementById("hdr-fill").style.width=pct+"%";
+  document.getElementById("hdr-pct").textContent=pct+"%";
+  document.getElementById("stats-row").innerHTML=
+    mkstat("Chapters done",done+"/"+total,"out of "+total+" total","#4A3FA0",Math.round(done/total*100))
+   +mkstat("Overall progress",pct+"%","syllabus covered","#1A6B4A",pct)
+   +mkstat("Daily target","10-12 hrs","coaching + self-study","#B85C00",null);
+}
+function mkstat(lbl,val,sub,tc,pct){
+  return`<div class="stat" style="border-left:3px solid ${tc};">
+    <div class="stat-lbl">${lbl}</div>
+    <div class="stat-val" style="color:${tc};">${val}</div>
+    <div class="stat-sub">${sub}</div>
+    ${pct!==null?`<div class="mini-bar"><div class="mini-fill" style="width:${pct}%;background:${tc};"></div></div>`:""}
+  </div>`;
+}
+
+function renderPhases(){
+  document.getElementById("phases-grid").innerHTML=phases.map(p=>
+    `<div class="phase" data-num="${p.num}">
+      <div class="phase-badge" style="background:${p.bg};color:${p.tc};">${p.badge}</div>
+      <div class="phase-title">${p.title}</div>
+      <div class="phase-period">${p.period}</div>
+      <div class="phase-desc">${p.desc}</div>
+    </div>`).join("");
+}
+
+function renderMonthGrid(){
+  document.getElementById("month-grid").innerHTML=months.map(m=>{
+    const sel=m.n===curMonth?"sel":"";
+    return`<button class="month-btn ${m.t} ${sel}" data-month="${m.n}">${m.n}</button>`;
+  }).join("");
+  document.querySelectorAll(".month-btn").forEach(btn=>{
+    btn.addEventListener("click",function(){selMonth(this.dataset.month);});
+  });
+}
+
+function renderMonthContent(){
+  const data=mdata[curMonth];
+  if(!data){document.getElementById("month-content").innerHTML="";return;}
+  document.getElementById("month-content").innerHTML=["physics","chemistry","maths"].map(sub=>{
+    const chs=data[sub]||[];if(!chs.length)return"";
+    const s=sc[sub],done=chs.filter(c=>chk[k(sub,c.c)]).length;
+    return`<div class="subj-card">
+      <div class="subj-head">
+        <div class="subj-pill" style="background:${s.lt};color:${s.tc};">${s.lbl}</div>
+        <div class="subj-prog">${done}/${chs.length} done</div>
+      </div>
+      ${chs.map(item=>{
+        const kk=k(sub,item.c),ck=chk[kk]?"checked":"",dc=chk[kk]?"done":"";
+        return`<div class="ch-item">
+          <input type="checkbox" class="ch-check" ${ck} onchange="tog('${sub}','${item.c.replace(/'/g,"\\'")}',this)"/>
+          <div><div class="ch-name ${dc}">${item.c}</div><div class="ch-note">${item.n}</div></div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
+}
+
+function selMonth(n){curMonth=n;renderMonthGrid();renderMonthContent();}
+
+function tog(sub,ch,el){
+  chk[k(sub,ch)]=el.checked;save();renderMonthContent();renderStats();
+  if(document.getElementById("tracker").classList.contains("active"))renderTracker();
+}
+
+function renderSched(){
+  const slots=scheds[curSched];
+  const tagColors={maths:"var(--accent-a-lt)|var(--accent-a)",physics:"var(--accent-p-lt)|var(--accent-p)",chemistry:"var(--accent-g-lt)|var(--accent-g)",coaching:"var(--coaching-lt)|var(--coaching)"};
+  const tagLabels={maths:"Mathematics",physics:"Physics",chemistry:"Chemistry",coaching:"Coaching"};
+  document.getElementById("daily-content").innerHTML=`<div class="schedule">${slots.map(s=>{
+    const hasTag=s.sub&&s.sub!==null;
+    const [bg,tc]=hasTag?(tagColors[s.sub]||"").split("|"):["",""];
+    const rowBg=hasTag&&s.sub!=="coaching"?`background:${bg}18;`:(s.sub==="coaching"?"background:var(--coaching-lt)22;":"");
+    const tag=hasTag?`<span class="slot-tag" style="background:${bg};color:${tc};">${tagLabels[s.sub]}</span>`:"";
+    return`<div class="slot" style="${rowBg}">
+      <div class="slot-time">${s.time}</div>
+      <div class="slot-body"><div class="slot-task">${s.task}</div>${tag}</div>
+    </div>`;
+  }).join("")}</div>`;
+}
+
+function sched(type,btn){
+  curSched=type;
+  document.querySelectorAll(".sched-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");renderSched();
+}
+
+function renderTracker(){
+  const subs=["physics","chemistry","maths"];
+  document.getElementById("tracker-top").innerHTML=subs.map(sub=>{
+    const s=sc[sub],total=allCh[sub].length,done=subDone(sub),pct=Math.round(done/total*100);
+    return`<div class="track-card" style="border-top:3px solid ${s.dot};">
+      <div class="track-title" style="color:${s.dot};">${s.lbl}</div>
+      <div class="track-count" style="color:${s.dot};">${done}<span style="font-size:1rem;opacity:.5;">/${total}</span></div>
+      <div class="track-bar"><div class="track-fill" style="width:${pct}%;background:${s.dot};"></div></div>
+      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">${pct}% complete</div>
+    </div>`;
+  }).join("");
+  document.getElementById("tracker-lists").innerHTML=subs.map(sub=>{
+    const s=sc[sub],chs=allCh[sub];
+    return`<div class="chlist">
+      <div class="chlist-head" style="border-left:3px solid ${s.dot};">
+        <div class="chlist-title" style="color:${s.dot};">${s.lbl}</div>
+        <div class="chlist-pct">${subDone(sub)}/${chs.length}</div>
+      </div>
+      ${chs.map(ch=>{
+        const kk=k(sub,ch),ck=chk[kk]?"checked":"",dc=chk[kk]?"done":"";
+        return`<div class="chlist-item">
+          <input type="checkbox" class="ch-check" ${ck} onchange="togTrack('${sub}','${ch.replace(/'/g,"\\'")}',this)"/>
+          <div class="ch-name ${dc}" style="font-size:12.5px;">${ch}</div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
+}
+
+function togTrack(sub,ch,el){
+  chk[k(sub,ch)]=el.checked;save();renderTracker();renderStats();
+  if(document.getElementById("monthly").classList.contains("active"))renderMonthContent();
+}
+
+function tab(id,btn){
+  document.querySelectorAll(".sec").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");btn.classList.add("active");
+  if(id==="tracker")renderTracker();
+}
+
+function _initRender(){renderStats();renderPhases();renderMonthGrid();renderMonthContent();renderSched();}
+loadFromCloud();
+</script>
+</body>
+</html>
